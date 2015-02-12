@@ -91,10 +91,7 @@
           counter+= n[i];
         }
       }
-      if (counter > 1) {
-        return true;
-      }
-      return false;
+      return (counter > 1);
     },
 
     // test if ANY rows on this board contain conflicts
@@ -109,11 +106,7 @@
           counter++;
         }
       }
-      if (counter > 0){
-        return true;
-      } else {
-        return false;
-      }
+      return (counter > 0);
     },
 
 
@@ -133,10 +126,7 @@
           counter++;
         }
       }
-      if (counter > 1) {
-        return true;
-      }
-      return false;
+      return (counter > 1);
     },
 
     // test if any columns on this board contain conflicts
@@ -151,11 +141,7 @@
           counter++;
         }
       }
-      if (counter > 0){
-        return true;
-      } else {
-        return false;
-      }
+      return (counter > 0);
     },
 
 
@@ -177,19 +163,13 @@
       var start = majorDiagonalColumnIndexAtFirstRow;
 
       for (var i = 0; i < rows.length; i++) {
-        if (rows[i][start] === undefined) {
-          counter += 0;
-        } else {
+        if (rows[i][start] !== undefined) {
           counter += rows[i][start];
         }
         start++;
       }
 
-      if (counter > 1) {
-        return true;
-      } else {
-        return false;
-      }
+      return (counter > 1);
 
     },
 
@@ -219,18 +199,12 @@
       var start = minorDiagonalColumnIndexAtFirstRow;
       var rows = this.rows();
       for (var i = 0; i < rows.length; i++){
-        if (rows[i][start] === undefined){
-          counter+= 0;
-        } else {
+        if (rows[i][start] !== undefined){
           counter+= rows[i][start];
         }
         start--;
       }
-      if (counter > 1){
-        return true;
-      } else {
-        return false;
-      }
+      return (counter > 1);
     },
 
     // test if any minor diagonals on this board contain conflicts
