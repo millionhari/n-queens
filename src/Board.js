@@ -77,27 +77,43 @@
     // ROWS - run from left to right
     // --------------------------------------------------------------
     //
-    // test if a specific row on this board contains a conflict
+    // test if A SPECIFIC row on this board contains a conflict
     hasRowConflictAt: function(rowIndex) {
-      var row = this.get(rowIndex);
-      var count = 0;
-      for (var i = 0; i < row.length; i++) {
-        count += row[i];
-      }
-
-      return count > 1;
-    },
-
-    // test if any rows on this board contain conflicts
-    hasAnyRowConflicts: function() {
-      var n = this.get('n');
-      for(var i = 0; i < n; i++) {
-        if(this.hasRowConflictAt(i)) {
-          return true;
+      // make counter
+      // iterate through row
+      // increment counter if values at index in row does not equal to zero
+      // if counter > 1, return true; else, retur n false
+      var counter = 0;
+      var n = this.get(rowIndex);
+      // console.log(n);
+      for (var i = 0; i < n.length; i++) {
+        if (n[i] === 1) {
+          counter+= n[i];
         }
       }
-
+      if (counter > 1) {
+        return true;
+      }
       return false;
+    },
+
+    // test if ANY rows on this board contain conflicts
+    hasAnyRowConflicts: function() {
+      // make counter
+      // iterate through all rows
+      // use hasRowConflictAt by passing in the current row to hasRowConflict
+      var counter = 0;
+      var rows = this.rows();
+      for (var i = 0; i < rows.length; i++){
+        if(this.hasRowConflictAt(i)){
+          counter++;
+        }
+      }
+      if (counter > 0){
+        return true;
+      } else {
+        return false;
+      }
     },
 
 
@@ -107,17 +123,39 @@
     //
     // test if a specific column on this board contains a conflict
     hasColConflictAt: function(colIndex) {
-      var col = this.get(colIndex);
-      var count = 0;
-      for (var i = 0; i < col.length; i++) {
-        count += col[i];
+      // make counter
+      // iterate through all rows
+      var counter = 0;
+      var rows = this.rows();
+
+      for (var i = 0; i < rows.length; i++) {
+        if(rows[i][colIndex]) {
+          counter++;
+        }
       }
-      return count > 1;
+      if (counter > 1) {
+        return true;
+      }
+      return false;
     },
 
     // test if any columns on this board contain conflicts
     hasAnyColConflicts: function() {
-      return false; // fixme
+      // make counter
+      // iterate through all rows
+      // use hasRowConflictAt by passing in the current row to hasRowConflict
+      var counter = 0;
+      var rows = this.rows();
+      for (var i = 0; i < rows.length; i++){
+        if(this.hasColConflictAt(i)){
+          counter++;
+        }
+      }
+      if (counter > 0){
+        return true;
+      } else {
+        return false;
+      }
     },
 
 
