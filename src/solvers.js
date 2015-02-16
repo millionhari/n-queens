@@ -41,6 +41,24 @@ window.findNRooksSolution = function(n) {
 
 // return the number of nxn chessboards that exist, with n rooks placed such that none of them can attack each other
 window.countNRooksSolutions = function(n) {
+  // var board = new Board({n:n});
+  // var solutionCount = 0;
+  
+  // function recurseNRooks(rowIndex){
+  //   if (rowIndex === n){
+  //     solutionCount++;
+  //     return;
+  //   }
+  //   for (var i = 0 ; i < n ; i++){
+  //     board.togglePiece(rowIndex, i);
+  //     if (!board.hasColConflictAt(i) && !board.hasRowConflictAt(rowIndex)){
+  //       recurseNRooks(rowIndex+1);
+  //     }
+  //     board.togglePiece(rowIndex, i);
+  //   }
+  // }
+  // recurseNRooks(0);
+
   var solutionCount = 1;
   for (var i = 1; i <= n; i++) {
     solutionCount *= i;
@@ -55,7 +73,23 @@ window.countNRooksSolutions = function(n) {
 // return a matrix (an array of arrays) representing a single nxn chessboard, with n queens placed such that none of them can attack each other
 window.findNQueensSolution = function(n) {
 
-  var solution = undefined; //fixme
+  var solution = new Board({n:n});
+
+  function recurse(rowIndex){
+    if (rowIndex === n){
+      return;
+    }
+
+    for (var i = 0 ; i < n ; i++){
+      solution.togglePiece(rowIndex, i);
+      if (solution.hasAnyQueenConflictsOn(rowIndex, i)){
+        solution.togglePiece(rowIndex, i);
+      }
+    }
+      recurse(rowIndex+1);
+  }
+
+  recurse(0);
 
   console.log('Single solution for ' + n + ' queens:', JSON.stringify(solution));
   return solution;
@@ -64,38 +98,24 @@ window.findNQueensSolution = function(n) {
 
 // return the number of nxn chessboards that exist, with n queens placed such that none of them can attack each other
 window.countNQueensSolutions = function(n) {
-  // make a new board
-  // make a solutionCount
-  // make currentRow
-  // get rows of board
-  // create an inner function
-    // if you reach the last row,
-      // solutioncount++
-    // loop through the row, then toggle the element from 0 to 1
-      // check if the toggle'd element has any conflicts
-      // if there are no conflicts
-        // call recursion on currentRow++ (array)
-      // toggle back from 1 to 0
-
-
+  //togglePiece
+  //hasAnyQueenConflictsOn(rowIndex, i)
   var board = new Board({n:n});
   var solutionCount = 0;
 
-
-  var recurseNQueens = function(rowIndex){
+  function recurseNQueens(rowIndex){
     if (rowIndex === n){
       solutionCount++;
       return;
     }
-    for (var i = 0; i < n; i++){
+    for (var i = 0 ; i < n ; i++){
       board.togglePiece(rowIndex, i);
-      // if (!board.hasAnyQueensConflicts()) {
-      if (!board.hasAnyQueenConflictsOn(rowIndex, i)) {
+      if (!board.hasAnyQueenConflictsOn(rowIndex, i)){
         recurseNQueens(rowIndex+1);
       }
       board.togglePiece(rowIndex, i);
     }
-  };
+  }
 
   recurseNQueens(0);
 
